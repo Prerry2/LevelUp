@@ -1,20 +1,35 @@
 const express = require('express')
 const app = express()
-const path = require('path')
-const exphbs = require('express-handlebars')
+
+
+const PORT = process.env.PORT || 8000;
+
+// const path = require('path')
+// const exphbs = require('express-handlebars')
 
 //if we choose to use handlebars
 // app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 // app.set('view engine', 'handlebars')
 
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-const PORT = process.env.PORT || 8000;
+app.use(express.static('public'))
 
-const routes = require("./controllers/controller.js");
 
-app.use(routes);
+// const routes = require("./controllers/controller.js");
+
+// app.use(routes);
 
 app.listen(PORT, function () {
     console.log("Server listening on: http://localhost:" + PORT);
 });
+
+
+
+// Set Handlebars.
+// var exphbs = require("express-handlebars");
+
+// app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+// app.set("view engine", "handlebars");
+
