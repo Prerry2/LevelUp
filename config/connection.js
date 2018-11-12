@@ -15,6 +15,17 @@ connection.connect(function(err) {
     return;
   }
   console.log("connected as id " + connection.threadId);
-});
+
+})
+
+// connection.connect(function(err) {
+//   if (err) {
+//     return console.error('error: ' + err.message);
+//   }
+//   user.addUser(['hayley', 'mypassword'], function(response) {
+//       console.log('reponse: ' + response)
+//   })
+//   console.log('Connected to the MySQL server.');
+// });
 
 module.exports = connection;

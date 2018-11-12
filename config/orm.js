@@ -2,6 +2,7 @@ const connection = require('./connection')
 
 const questions = num => Array(num).fill('?').toString();
   
+  
 // const sqlVals = object => {
 //     let arrPairs = Object.entries(object)
 //     return arrPairs.map(x => `${x[0]} = '${x[1]}'`).join(', ');
@@ -24,19 +25,45 @@ const orm = {
         queryString += ') '
         queryString += 'VALUES ('
         queryString += questions(values.length)
-        queryString += ')'
+        queryString += '); '
+
+        console.log(queryString)
+
+        connection.query(queryString, function(err, result) {
+            if (err) {
+              throw err;
+            }
+            cb(result);
+          });
+      
     },
     createUserTasks : (userID, columns, cb) => {
         let queryString = 'CREATE TABLE ' + userID + 'tasks'
         queryString += ' ('
         queryString += columns
         queryString += ')'
+
+        connection.query(queryString, function(err, result) {
+            if (err) {
+              throw err;
+            }
+            cb(result);
+          });
+      
     },
     createUserStats : (userID, columns, cb) => {
         let queryString = 'CREATE TABLE ' + userID + 'stats'
         queryString += ' ('
         queryString += columns.toString()
         queryString += ')'
+
+        connection.query(queryString, function(err, result) {
+            if (err) {
+              throw err;
+            }
+            cb(result);
+          });
+      
     },
     addUserStats : (userID, columns, values, cb) => {
         let queryString = 'INSERT INTO ' + userID + 'stats'
@@ -45,6 +72,14 @@ const orm = {
         queryString += ') '
         queryString += 'VALUES ('
         queryString += values + ')'
+
+        connection.query(queryString, function(err, result) {
+            if (err) {
+              throw err;
+            }
+            cb(result);
+          });
+      
     },
 }
 

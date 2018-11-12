@@ -2,8 +2,10 @@ const orm = require('../config/orm')
 
 const user = {
     addUser : (values, cb) => {
-        orm.addUser('users', ['name, password'], values, function(response) {
+        console.log(values)
+        orm.addUser('users', ['NAME, PASSWORD'], values, function(response) {
             cb(response)
+
         })
     },
     createUserTasks : (userID, cb) => {
