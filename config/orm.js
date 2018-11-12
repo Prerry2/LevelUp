@@ -70,8 +70,10 @@ const orm = {
         queryString += ' ('
         queryString += columns 
         queryString += ') '
-        queryString += 'VALUES ('
-        queryString += values + ')'
+        queryString += 'VALUES '
+        queryString += values
+
+        console.log(queryString)
 
         connection.query(queryString, function(err, result) {
             if (err) {

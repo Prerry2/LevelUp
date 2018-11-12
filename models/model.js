@@ -18,10 +18,12 @@ const user = {
         })
     },
     addUserStats : (userID, cb) => {
-        orm.addUserStats(userID, 'stat_name, stat_score', [('exp', 1), ('health', 5), ('intelligence', 5), ('charisma', 5), ('vitality', 5), ('strength', 5)], function(response) {
+        orm.addUserStats(userID, 'stat_name, stat_score', "('exp', 1), ('health', 5), ('intelligence', 5), ('charisma', 5), ('vitality', 5), ('strength', 5)", function(response) {
             cb(response)
         })
     }
 }
 
 module.exports = user
+
+//, 
