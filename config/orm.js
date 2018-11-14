@@ -1,12 +1,12 @@
 const connection = require('./connection')
 
 const questions = num => Array(num).fill('?').toString();
-  
-  
-// const sqlVals = object => {
-//     let arrPairs = Object.entries(object)
-//     return arrPairs.map(x => `${x[0]} = '${x[1]}'`).join(', ');
-// }
+
+
+const sqlVals = object => {
+    let arrPairs = Object.entries(object)
+    return arrPairs.map(x => `${x[0]} = '${x[1]}'`).join(', ');
+}
 
 //orm create user functions
 //addUser -- adds user to overall user table
@@ -18,71 +18,120 @@ const questions = num => Array(num).fill('?').toString();
 
 
 const orm = {
-    addUser : (table, columns, values, cb) => {
+    addUser: (table, columns, values, cb) => {
         let queryString = 'INSERT INTO ' + table
         queryString += ' ('
         queryString += columns.toString()
         queryString += ') '
-        queryString += 'VALUES ('
-        queryString += questions(values.length)
-        queryString += '); '
+        queryString += 'VALUES ("'
+        queryString += values.join('","')
+        queryString += '"); '
 
+        //questions(values.length)
         console.log(queryString)
 
-        connection.query(queryString, function(err, result) {
+        connection.query(queryString, function (err, result) {
             if (err) {
-              throw err;
+                throw err;
             }
             cb(result);
-          });
-      
+        });
+
     },
-    createUserTasks : (userID, columns, cb) => {
-        let queryString = 'CREATE TABLE ' + userID + 'tasks'
+    createUserTasks: (userID, columns, cb) => {
+        let queryString = 'CREATE TABLE ' + userID + '_tasks'
         queryString += ' ('
         queryString += columns
         queryString += ')'
 
-        connection.query(queryString, function(err, result) {
+        connection.query(queryString, function (err, result) {
             if (err) {
-              throw err;
+                throw err;
             }
             cb(result);
-          });
-      
+        });
+
     },
-    createUserStats : (userID, columns, cb) => {
-        let queryString = 'CREATE TABLE ' + userID + 'stats'
+    createUserStats: (userID, columns, cb) => {
+        let queryString = 'CREATE TABLE ' + userID + '_stats'
         queryString += ' ('
         queryString += columns.toString()
         queryString += ')'
 
-        connection.query(queryString, function(err, result) {
+        connection.query(queryString, function (err, result) {
             if (err) {
-              throw err;
+                throw err;
             }
             cb(result);
-          });
-      
+        });
+
     },
-    addUserStats : (userID, columns, values, cb) => {
-        let queryString = 'INSERT INTO ' + userID + 'stats'
+    addUserStats: (userID, columns, values, cb) => {
+        let queryString = 'INSERT INTO ' + userID + '_stats'
         queryString += ' ('
-        queryString += columns 
+        queryString += columns
         queryString += ') '
         queryString += 'VALUES '
         queryString += values
 
         console.log(queryString)
 
-        connection.query(queryString, function(err, result) {
+        connection.query(queryString, function (err, result) {
             if (err) {
-              throw err;
+                throw err;
             }
             cb(result);
-          });
-      
+        });
+
     },
+    updateDifficultStat: (userID, stat, cb) => {
+        let queryString = 'UPDATE ' + userID + '_stats'
+        queryString += ' SET '
+        queryString += 'stat_score = stat_score +3'
+        queryString += ' WHERE stat_name = "' + stat.toString() + '"'
+
+        console.log(queryString)
+
+        connection.query(queryString, function (err, result) {
+            if (err) {
+                throw err;
+            }
+            cb(result);
+        });
+
+    },
+    updateEasyStat: (userID, stat, cb) => {
+        let queryString = 'UPDATE ' + userID + '_stats'
+        queryString += ' SET '
+        queryString += 'stat_score = stat_score +1'
+        queryString += ' WHERE stat_name = "' + stat.toString() + '"'
+
+        console.log(queryString)
+
+        connection.query(queryString, function (err, result) {
+            if (err) {
+                throw err;
+            }
+            cb(result);
+        });
+    },
+    addTask: (userID, columns, values, cb) => {
+        let queryString = 'INSERT INTO ' + userID + '_tasks'
+        queryString += ' ('
+        queryString += columns
+        queryString += ') '
+        queryString += 'VALUES ('
+        queryString += values.toString() + ')'
+
+        console.log(queryString)
+
+        connection.query(queryString, function (err, result) {
+            if (err) {
+                throw err;
+            }
+            cb(result);
+        });
+    }
 }
 
 
