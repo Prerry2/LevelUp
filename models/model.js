@@ -8,7 +8,7 @@ const user = {
         })
     },
     createUserTasks : (userID, cb) => {
-        orm.createUserTasks(userID, 'id INT AUTO_INCREMENT, title VARCHAR(100) NOT NULL, notes VARCHAR(200), difficulty BOOLEAN NOT NULL, importance BOOLEAN NOT NULL, type VARCHAR(50) NOT NULL, category VARCHAR(30), PRIMARY KEY (id)', function(response) {
+        orm.createUserTasks(userID, 'id INT AUTO_INCREMENT, title VARCHAR(100) NOT NULL, notes VARCHAR(200), difficulty BOOLEAN NOT NULL, importance BOOLEAN NOT NULL, type VARCHAR(50) NOT NULL, category VARCHAR(30), completed BOOLEAN NOT NULL, PRIMARY KEY (id)', function(response) {
             cb(response)
         })
     },
@@ -21,9 +21,22 @@ const user = {
         orm.addUserStats(userID, 'stat_name, stat_score', "('exp', 1), ('health', 5), ('intelligence', 5), ('charisma', 5), ('vitality', 5), ('strength', 5)", function(response) {
             cb(response)
         })
+    },
+    updateEasyStat: (userID, stat, cb) => {
+        orm.updateEasyStat(userID, stat, function(response) {
+            cb(response)
+        })
+    },
+    updateDifficultStat: (userID, stat, cb) => {
+        orm.updateEasyStat(userID, stat, function(response) {
+            cb(response)
+        })
+    },
+    addTask: (userID, values, cb) => {
+        orm.addTask(userID, 'title, notes, difficulty, importance, type, category', values, function(response) {
+            cb(response)
+        })
     }
 }
 
 module.exports = user
-
-//, 
