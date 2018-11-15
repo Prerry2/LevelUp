@@ -18,9 +18,16 @@
   },
   "homepage": "https://github.com/LevelUP-CWRU/LevelUp#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "debug": "^4.1.0",
     "express": "^4.16.4",
     "express-router": "0.0.1",
+    "fs": "0.0.1-security",
+    "hbs": "^4.0.1",
+    "morgan": "^1.9.1",
     "mysql": "^2.16.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "serve-favicon": "^2.5.0"
   }
 }

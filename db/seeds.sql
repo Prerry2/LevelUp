@@ -1,0 +1,10 @@
+-- CREATE TABLE sample_tasks (
+-- id INT AUTO_INCREMENT,
+-- title VARCHAR(100) NOT NULL,
+-- notes VARCHAR(200),
+-- difficulty BOOLEAN NOT NULL,
+-- importance BOOLEAN NOT NULL,
+-- type VARCHAR(50) NOT NULL,
+-- category VARCHAR(30),
+-- completed BOOLEAN NOT NULL, 
+-- PRIMARY KEY (id)
