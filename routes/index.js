@@ -34,7 +34,7 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  res.render('dashboard', { title: 'Dashboard'})
+  res.render('dashboard', { title: 'Dashboard' })
 
   const username = req.body.username
   const password = req.body.password
@@ -42,6 +42,62 @@ router.post('/login', function(req, res, next) {
   console.log(username)
   console.log(password)
 
+})
+
+router.get('/addtask', function(req, res, next) {
+  res.render('addtask', { title: 'Add A New Task' })
+})
+
+router.post('/addtask', function(req, res, next) {
+  
+  const type = req.body.type
+  const title = req.body.title
+  const notes = req.body.notes
+  const category = req.body.category
+  const difficulty = req.body.difficulty
+  const importance = req.body.importance
+  const deadline = req.body.deadline
+  
+  
+  console.log("\ntype: " + type)
+  console.log("title: " + title)
+  console.log("notes: " + notes)
+  console.log("category: " + category)
+  console.log("isDifficult: " + difficulty)
+  console.log("isImportant: " + importance)
+  console.log("hasDeadline: " + deadline + "\n")
+  if (deadline) { const deadlineDate = req.body.deadlineDate; console.log(deadlineDate) }
+  
+  res.render('dashboard', { title: 'Dashboard' })
+})
+
+router.get('/addroutine', function(req, res, next) {
+  res.render('addroutine', { title: 'Add A New Routine' })
+})
+
+router.post('/addroutine', function(req, res, next) {
+  
+  const type = req.body.type
+  const title = req.body.title
+  const notes = req.body.notes
+  const category = req.body.category
+  const difficulty = req.body.difficulty
+  const importance = req.body.importance
+  const streak = req.body.streak
+  
+  console.log("type: " + type)
+  console.log("title: " + title)
+  console.log("notes: " + notes)
+  console.log("category: " + category)
+  console.log("isDifficult: " + difficulty)
+  console.log("isImportant: " + importance)
+  console.log("hasStreak: " + streak + "\n")
+  
+  res.render('/dashboard', { title: 'Dashboard' })
+})
+
+router.get('/dashboard', function(req, res, next) {
+  res.render('dashboard', { title: 'Dashboard' })
 })
 
 module.exports = router;
