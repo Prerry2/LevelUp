@@ -1,23 +1,23 @@
 var express = require('express');
 var router = express.Router();
+// var db = require('../models')
 
 const connection = require('../config/connection.js')
-const User = connection.User
-const Task = connection.Task
-const Routine = connection.Routine
+const User = connection.User;
+const Task = connection.Task;
+const Routine = connection.Routine;
 
 router.get('/', function(req, res, next) {
   res.render('index', {title: 'LevelUP'})
-})
-
-
+});
 
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Registration' });
 });
 
 router.post('/register', function(req, res, next) {
-  User.create({
+  
+  User.create(req.body, {
     fields: ['username', 'password', 'avatar']
   })
   
@@ -72,6 +72,24 @@ router.post('/addroutine', function(req, res, next) {
 
 router.get('/dashboard', function(req, res, next) {
   res.render('dashboard', { title: 'Dashboard' })
+})
+
+router.get('/api/users', function(req, res, next) {
+  User.findAll({}).then(function(dbUsers) {
+    res.json(dbUsers)
+  })
+})
+
+router.get('/api/routines', function(req, res, next) {
+  Routine.findAll({}).then(function(dbRoutine) {
+    res.json(dbRoutine)
+  })
+})
+
+router.get('/api/tasks', function(req, res, next) {
+  Task.findAll({}).then(function(dbRoutine) {
+    res.json(dbUsers)
+  })
 })
 
 module.exports = router;
