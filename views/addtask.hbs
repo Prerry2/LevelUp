@@ -1,0 +1,102 @@
+
+{{> header }}
+<div class="container">
+<div class="col-md-8 mx-auto my-5">
+    
+<h1 class="text-center">{{title}}</h1>
+
+<div class="col mx-1 my-1">
+            <hr style="width:75%">
+            <form method="POST" action="/addtask">
+                <div class="form-group row">
+                    <label for="type" class="col-sm-2 col-form-label">Type of LevelUP</label>
+                    <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline">
+                            <input class="form-control-plaintext" name="type" type="text" readonly id="typeTask" value="task">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                <label for="title" class="col-sm-2 col-form-label">Title</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="title" id="title" placeholder="Task Title">
+                </div>
+                </div>
+                <div class="form-group row">
+                <label for="notes" class="col-sm-2 col-form-label">Notes</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Task Notes">
+                    </textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="category">Category</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="category1" value="professional">
+                            <label class="form-check-label" name="category"for="category1">Professional</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="category2" value="exercise">
+                            <label class="form-check-label" for="category2">Exercise</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="category3" value="selfcare">
+                            <label class="form-check-label" for="category3">Self-Care</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="category4" value="education">
+                            <label class="form-check-label" for="category4">Education</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="category5" value="chores">
+                            <label class="form-check-label" for="category5">Chores</label>
+                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="difficulty">Difficulty</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="difficulty" id="noDifficulty" value="false">
+                        <label class="form-check-label" name="difficulty" for="noDifficulty">Easy</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="difficulty" id="yesDifficulty" value="true">
+                        <label class="form-check-label" name="difficulty" for="yesDifficulty">Difficult</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="difficulty">Importance</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="importance" id="noImportant" value="false">
+                        <label class="form-check-label" name="importance" for="noImportant">Trivial</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="importance" id="yesImportance" value="true">
+                        <label class="form-check-label" name="importance" for="yesImportant">Essential</label>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="deadline">Has Deadline?</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="deadline" id="yesDeadline" value="true">
+                        <label class="form-check-label" name="deadline" for="yesDeadline">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="deadline" id="noDeadline" value="false">
+                        <label class="form-check-label" name="deadline" for="noDeadline">No</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="deadlineDate" class="col-sm-2 col-form-label">Deadline Date</label>
+                    <input type="text" class="col-sm-10 form-control" name="deadlineDate" id="deadlineDate" placeholder="MM/DD/YYYY">
+                </div>
+                <div class="form-group m-0">
+                    <button type="submit" class="col-12 btn btn-info btn-lg btn-block my-1">ADD TASK</button>
+                </div>
+            </form>
+            <a href="/dashboard"><button class="col-12 btn btn-danger btn-lg btn-block my-1">CANCEL</button></a>
+        </div>
+</div>
+</div>
+
+{{> footer-end }}

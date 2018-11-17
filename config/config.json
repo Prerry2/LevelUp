@@ -1,0 +1,23 @@
+{
+    "development": {
+      "username": "root",
+      "password": "IJ-25-jo",
+      "database": "levelup_db",
+      "host": "localhost",
+      "dialect": "mysql",
+      "operatorsAliases": false
+    },
+    "test": {
+      "username": "root",
+      "password": "IJ-25-jo",
+      "database": "levelup_test",
+      "host": "localhost",
+      "dialect": "mysql",
+      "logging": false
+    },
+    "production": {
+      "use_env_variable": "JAWSDB_URL",
+      "dialect": "mysql"
+    }
+  }
+  
