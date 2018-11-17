@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="../public/assets/js/app.js"></script>
+
+    <title>LevelUP - Growth Gamified</title>
+</head>
+<body>
+<div class="container">
+
+<br><hr><br>
+    <div class="col mx-1 my-1">
+        <h1>LevelUP</h1>
+        <h4>GROWTH GAMIFIED</h4>
+        <button class="btn btn-success">NEW USER</button>
+        <button class="btn btn-primary">EXISTING USER</button>
+    </div>
+<br><hr><br>
+    <div class="col mx-1 my-1">
+        <h1>NEW USER FORM</h1>
+        <form>
+            <div class="form-group row">
+              <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputUsername" placeholder="Username">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                        Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                      </small>
+              </div>
+            </div>
+            <fieldset class="form-group">
+              <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Avatar</legend>
+                <div class="col-sm-10">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="avatarRadios" id="inputMale" value="option1" checked>
+                    <label class="form-check-label" for="inputMale">
+                      Male
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="avatarRadios" id="inputFemale" value="option2">
+                    <label class="form-check-label" for="inputFemale">
+                      Female
+                    </label>
+                  </div>
+                  <div class="form-check disabled">
+                    <input class="form-check-input" type="radio" name="avatarRadios" id="inputNonBinary" value="option3">
+                    <label class="form-check-label" for="inputNonBinary">
+                      Non-Binary
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">CREATE NEW USER</button>
+                <button class="btn btn-danger">CANCEL</button>
+              </div>
+            </div>
+          </form>
+    </div>
+<br><hr><br>
+    <div class="col mx-1 my-1">
+        <h1>ADD NEW TASK FORM</h1>
+        <form>
+            <div class="form-group row">
+              <label for="inputTaskTitle" class="col-sm-2 col-form-label">Title</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputTaskTitle" placeholder="Task Title">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputTaskNotes" class="col-sm-2 col-form-label">Notes</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" id="inputTaskNotes" rows="3" placeholder="Task Notes">
+                </textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="inputTaskCategory">Category</label>
+                <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inputCategory1" value="professional">
+                        <label class="form-check-label" for="inputCategory1">Professional</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inputCategory2" value="exercise">
+                        <label class="form-check-label" for="inputCategory2">Exercise</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inputCategory3" value="selfcare">
+                        <label class="form-check-label" for="inputCategory3">Self-Care</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inputCategory4" value="education">
+                        <label class="form-check-label" for="inputCategory4">Education</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inputCategory5" value="chores">
+                        <label class="form-check-label" for="inputCategory5">Chores</label>
+                      </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="inputTaskDifficulty">Difficulty</label>
+                <select class="col-sm-10 form-control" id="inputTaskDifficulty">
+                    <option value="!difficult">Easy</option>
+                    <option value="difficult">Difficult</option>
+                </select>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="inputTaskImportance">Importance</label>
+                <select class="col-sm-10 form-control" id="inputTaskImportance">
+                    <option value="!difficult">Trivial</option>
+                    <option value="difficult">Essential</option>
+                </select>
+            </div>
+            
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">CREATE NEW USER</button>
+                <button class="btn btn-danger">CANCEL</button>
+              </div>
+            </div>
+          </form>
+    </div>
+<br><hr><br>
+    <div class="col mx-1 my-1">
+        <h1>ADD NEW ROUTINE FORM</h1>
+        <form>
+            <div class="form-group row">
+              <label for="inputRoutineTitle" class="col-sm-2 col-form-label">Title</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputRoutineTitle" placeholder="Routine Title">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputRoutineNotes" class="col-sm-2 col-form-label">Notes</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" id="inputRoutineNotes" rows="3" placeholder="Routine Notes">
+                </textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="inputTaskCategory">Category</label>
+                <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inputCategory1" value="professional">
+                        <label class="form-check-label" for="inputCategory1">Professional</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inputCategory2" value="exercise">
+                        <label class="form-check-label" for="inputCategory2">Exercise</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inputCategory3" value="selfcare">
+                        <label class="form-check-label" for="inputCategory3">Self-Care</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inputCategory4" value="education">
+                        <label class="form-check-label" for="inputCategory4">Education</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inputCategory5" value="chores">
+                        <label class="form-check-label" for="inputCategory5">Chores</label>
+                      </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="inputTaskDifficulty">Difficulty</label>
+                <select class="col-sm-10 form-control" id="inputTaskDifficulty">
+                    <option value="!difficult">Easy</option>
+                    <option value="difficult">Difficult</option>
+                </select>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="inputTaskImportance">Importance</label>
+                <select class="col-sm-10 form-control" id="inputTaskImportance">
+                    <option value="!difficult">Trivial</option>
+                    <option value="difficult">Essential</option>
+                </select>
+            </div>
+            
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <button type="submit" id = "submitTask" class="btn btn-primary">CREATE NEW USER</button>
+                <button class="btn btn-danger">CANCEL</button>
+              </div>
+            </div>
+          </form>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<div class="col-md-9 main">
+    <div class="row">
+        <div class="col-md-4">
+            <h1 class="col-head">tasks</h1>
+            <div class="card" style="width: 18rem;">
+                <ul class="list-group list-group-flush">
+                    {{#each task}}
+                    <li class="list-group-item"><input type="checkbox" value="complete" class="check"></input>Cras justo odio</li>
+                    {{/each}}
+                    <li class="add list-group-item"><button>add new task</button></li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h1 class="col-head">routines</h1>
+            <div class="card" style="width: 18rem;">
+                <ul class="list-group list-group-flush">
+                    {{#each routine}}
+                    <li class="list-group-item">Cras justo odio</li>
+                    {{/each}}
+                    <li class="add list-group-item"><button>add new routine</button></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h1 class="col-head">completed quests</h1>
+            <div class="card" style="width: 18rem;">
+                <ul class="list-group list-group-flush">
+                    {{#each completed-item}}
+                    <li class="list-group-item">Cras justo odio</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

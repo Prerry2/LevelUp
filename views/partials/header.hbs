@@ -13,6 +13,49 @@
         
         {{!-- <link rel="stylesheet" href="../../public/assets/css/style.css"> --}}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        
+        <link rel="stylesheet" href="../../public/assets/css/style.css">
+
     </head>
     <body>
+
+        <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">LevelUP</a>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#">Logout</a>
+        </li>
+      </ul>
+    </nav>
+    <div class='container-fluid'>
+       <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">
+                    <span><img src="sq-logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></span>
+                    LevelUP
+                </a>
+            </nav>
+        </div>
+        <div class="row">
+
+            <div class="col-md-3 profile">
+                <div class="userpic">
+                    <img src="sq-logo.png" class="img-responsive" alt="avatar">
+                </div>
+
+                <div class="username">
+                    <h1>username</h1>
+                </div>
+
+                <div class="profile-usermenu">
+                    <ul class="nav">
+                        <li>
+                            <h3>health: {{health}}</h3>
+                        </li>
+                        <li>
+                            <h3>level: {{level}}</h3>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {{> display}}
