@@ -4,3 +4,4 @@ DEPENDENCIES
     mysql2
     express
     express-handlebars
+    path
