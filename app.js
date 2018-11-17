@@ -1,240 +1,72 @@
-var Sequelize = require('sequelize')
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
-var connection = new Sequelize('levelup_db', 'root', 'IJ-25-jo', {
-    dialect: 'mysql'
-})
+var index = require('./routes/index');
+var users = require('./routes/users');
 
-var User = connection.define('user', {
-    username: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false
-    },
-    password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        // validate: {
-        //     len: {
-        //         args: [8, 20],
-        //         msg: "Please enter a password between 8-20 characters"
-        //     }
-        // }
-    },
-    avatar: {
-        type: Sequelize.STRING,
-    },
-    experience: {
-        type: Sequelize.INTEGER,
-        defaultValue: 5
-    },
-    intelligence: {
-        type: Sequelize.INTEGER,
-        defaultValue: 5
-    },
-    strength: {
-        type: Sequelize.INTEGER,
-        defaultValue: 5
-    },
-    charisma: {
-        type: Sequelize.INTEGER,
-        defaultValue: 5
-    },
-    vitality: {
-        type: Sequelize.INTEGER,
-        defaultValue: 5
-    },
-    
-})
+var app = express();
 
-var Task = connection.define('card', {
-    type: {
-        type: Sequelize.STRING,
-        defaultValue: 'task'
-    },
-    title: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    notes: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    category: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    difficult: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    important: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    deadline: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    deadlineDate: {
-        // type: Sequelize.DATE
-        type: Sequelize.STRING,
-        validate: {
-        }
-    },
-    complete: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-    },
-    streak: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-    },
-    streakCount: {
-        type: Sequelize.INTEGER,
-        defaultValue: null
-    },
-    username: {
-        type: Sequelize.STRING,
-        // validate: {
-        //     notNull: true,
-        //     notEmpty: true
-        // }
-    }
-})
+// require('dotenv').config();
 
-var Routine = connection.define('card', {
-    type: {
-        type: Sequelize.STRING,
-        defaultValue: 'routine'
-    },
-    title: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    notes: {
-        type: Sequelize.TEXT,
-        validate: {
-            notEmpty: true
-        }
-    },
-    category: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    difficult: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    important: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    deadline: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
-    },
-    deadlineDate: {
-        // type: Sequelize.DATE
-        type: Sequelize.STRING,
-        defaultValue: null
-    },
-    complete: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-    },
-    streak: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-    },
-    streakCount: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
-    },
-    username: {
-        type: Sequelize.STRING,
-        // validate: {
-        //     notNull: true,
-        //     notEmpty: true
-        // }
-    }
-})
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
 
-connection.sync().then(function () {
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-    // var req = {
-    //     body: {
-    //         username: 'karlos',
-    //         password: 'password',
-    //         avatar: '1'
-    //     }
-    // }
+//set up route dependencies
+app.use('/', index);
+app.use('/users', users);
 
-    // User.create(req.body, {
-    //     fields: ['username', 'password', 'avatar']
-    // })
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
-    // User.create({
-    //     username: 'tallkarol',
-    //     password: 'password',
-    //     avatar: '1'
-    // })
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // Task.create({
-    //     title: 'sample title',
-    //     notes: 'sample notes',
-    //     category: 'professional',
-    //     difficult: false,
-    //     important: true,
-    //     deadline: false,
-    //     username: 'tallkarol'
-    // })
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
 
-    // Routine.create({
-    //     title: 'sample title',
-    //     notes: 'sample notes',
-    //     category: 'professional',
-    //     difficult: true,
-    //     important: false,
-    //     username: 'tallkarol'
-    // })
 
-    // User.findById(1).then(function(user) {
-    //     console.log(user.dataValues)
-    // })
+// Handlebars default config
+const hbs = require('hbs');
+const fs = require('fs');
 
-    // User.findAll().then(function(users) {
-    //     console.log(users.length)
-    // })
-}).catch(function (error) {
+const partialsDir = __dirname + '/views/partials';
 
-})
+const filenames = fs.readdirSync(partialsDir);
+
+filenames.forEach(function (filename) {
+  const matches = /^([^.]+).hbs$/.exec(filename);
+  if (!matches) {
+    return;
+  }
+  const name = matches[1];
+  const template = fs.readFileSync(partialsDir + '/' + filename, 'utf8');
+  hbs.registerPartial(name, template);
+});
+
+hbs.registerHelper('json', function(context) {
+    return JSON.stringify(context, null, 2);
+});
+
+
+module.exports = app;

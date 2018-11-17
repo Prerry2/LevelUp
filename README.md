@@ -1,10 +1,2 @@
-DEPENDENCIES
-    sequelize
-    mysql
-    mysql2
-    express
-    express-handlebars
-    path
-    http?
-    passport
-    fs
+# levelup
+An app to game-ify mundane tasks of life.

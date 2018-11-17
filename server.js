@@ -1,61 +1,69 @@
-var express = require('express')
-var exphbs = require('express-handlebars')
-var path = require('path')
-var http = require('http')
-var passport = require('passport')
-var fs = require('fs')
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
-var router = express.Router()
+// Module dependencies.
 
-var db = require('./models')
+var app = require('./app');
+var debug = require('debug')('levelup_db:server');
+var http = require('http');
 
-// from youtube authentication video
-var routes = require('./routes')
-// var user = require('./routes/user')
-// var home = require('./routes/home')
-// var application = require('./routes/application')
-// var passportConfig = require('./config/passport')
+// Get port from environment and store in Express.
 
-var app = express()
-// require("dotenv").config();
-var PORT = process.env.PORT || 4200
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
 
-app.use(express.static(path.join(__dirname, 'public')))
+// Create HTTP server.
+var server = http.createServer(app);
 
-// middleware
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieParser())
-// app.use(express.session({ secret: 'formakebettersecurity' }))
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(router)
+// Listen on provided port, on all network interfaces.
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
 
+// Normalize a port into a number, string, or false.
+function normalizePort(val) {
+  var port = parseInt(val, 10);
 
-// handlebars
-app.engine("handlebars", exphbs({
-    // defaultLayout: "main"
-}))
-app.set('views', path.join(__dirname, 'views'))
-app.set("view engine", "handlebars")
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
 
-// temp routes from previous build
-app.use('/', routes.index)
+  if (port >= 0) {
+    // port number
+    return port;
+  }
 
-const syncOptions = { force: false }
+  return false;
+}
 
-// clear testdb by setting force to true
-// if (process.env.NODE_ENV === "test") {
-//     syncOptions.force = true
-// }
+// Event listener for HTTP server "error" event.
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
 
-// start server, sync models
-// db.sequelize.sync(syncOptions).then(function() {
-//     app.listen(PORT, function() {
-//         console.log("Listening on port " + PORT)
-//     })
-// })
-console.log('it works')
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
 
-module.exports = app
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+// Event listener for HTTP server "listening" event.
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}

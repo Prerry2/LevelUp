@@ -1,109 +1,77 @@
-exports.index = function(req, res) {
-    res.render('index', { title: 'LevelUP'})
-}
+var express = require('express');
+var router = express.Router();
 
-// from first build
+const connection = require('../config/connection.js')
+const User = connection.User
+const Task = connection.Task
+const Routine = connection.Routine
 
-// var express = require('express');
-// var router = express.Router();
+router.get('/', function(req, res, next) {
+  res.render('index', {title: 'LevelUP'})
+})
 
-// const connection = require('../config/connection.js')
 
-// router.get('/', function(req, res, next) {
-//   res.render('index', {title: 'LevelUP'})
-// })
 
-// router.get('/register', function(req, res, next) {
-//   res.render('register', { title: 'Registration' });
-// });
+router.get('/register', function(req, res, next) {
+  res.render('register', { title: 'Registration' });
+});
 
-// router.post('/register', function(req, res, next) {
-//   const username = req.body.username
-//   const password = req.body.password
-//   const avatar = req.body.avatarRadios
-
-//   console.log(username)
-//   console.log(password)
-//   console.log(avatar)
+router.post('/register', function(req, res, next) {
+  User.create({
+    fields: ['username', 'password', 'avatar']
+  })
   
-//   res.render('dashboard', { title: 'Registration Complete - Welcome To LevelUP' })
+  res.render('dashboard', { title: 'Registration Complete - Welcome To LevelUP' })
  
-//   // connection.query('INSERT INTO users VALUES (?, ?, ?)' [username, password, avatar], function(error, res, fields) {
-//   //   if (error) throw error;
-    
-//   //   res.render('register', { title: 'Registration Complete' })
-//   // })
-// });
+});
 
-// router.get('/login', function(req, res, next) {
-//   res.render('login', { title: 'Login' });
-// });
 
-// router.post('/login', function(req, res, next) {
-//   res.render('dashboard', { title: 'Dashboard' })
 
-//   const username = req.body.username
-//   const password = req.body.password
+router.get('/login', function(req, res, next) {
+  res.render('login', { title: 'Login' });
+});
 
-//   console.log(username)
-//   console.log(password)
+router.post('/login', function(req, res, next) {
+  res.render('dashboard', { title: 'Dashboard' })
 
-// })
+  const username = req.body.username
+  const password = req.body.password
 
-// router.get('/addtask', function(req, res, next) {
-//   res.render('addtask', { title: 'Add A New Task' })
-// })
+})
 
-// router.post('/addtask', function(req, res, next) {
+
+
+router.get('/addtask', function(req, res, next) {
+  res.render('addtask', { title: 'Add A New Task' })
+})
+
+router.post('/addtask', function(req, res, next) {
   
-//   const type = req.body.type
-//   const title = req.body.title
-//   const notes = req.body.notes
-//   const category = req.body.category
-//   const difficulty = req.body.difficulty
-//   const importance = req.body.importance
-//   const deadline = req.body.deadline
+  Task.create(req.body, {
+        fields: ['title', 'notes', 'category', 'difficult', 'important', 'deadline', 'deadlineDate']
+    })
   
-  
-//   console.log("\ntype: " + type)
-//   console.log("title: " + title)
-//   console.log("notes: " + notes)
-//   console.log("category: " + category)
-//   console.log("isDifficult: " + difficulty)
-//   console.log("isImportant: " + importance)
-//   console.log("hasDeadline: " + deadline + "\n")
-//   if (deadline) { const deadlineDate = req.body.deadlineDate; console.log(deadlineDate) }
-  
-//   res.render('dashboard', { title: 'Dashboard' })
-// })
+  res.render('dashboard', { title: 'Dashboard' })
+})
 
-// router.get('/addroutine', function(req, res, next) {
-//   res.render('addroutine', { title: 'Add A New Routine' })
-// })
 
-// router.post('/addroutine', function(req, res, next) {
-  
-//   const type = req.body.type
-//   const title = req.body.title
-//   const notes = req.body.notes
-//   const category = req.body.category
-//   const difficulty = req.body.difficulty
-//   const importance = req.body.importance
-//   const streak = req.body.streak
-  
-//   console.log("type: " + type)
-//   console.log("title: " + title)
-//   console.log("notes: " + notes)
-//   console.log("category: " + category)
-//   console.log("isDifficult: " + difficulty)
-//   console.log("isImportant: " + importance)
-//   console.log("hasStreak: " + streak + "\n")
-  
-//   res.render('/dashboard', { title: 'Dashboard' })
-// })
 
-// router.get('/dashboard', function(req, res, next) {
-//   res.render('dashboard', { title: 'Dashboard' })
-// })
+router.get('/addroutine', function(req, res, next) {
+  res.render('addroutine', { title: 'Add A New Routine' })
+})
 
-// module.exports = router;
+router.post('/addroutine', function(req, res, next) {
+  
+  Routine.create(req.body, {
+    fields: ['title', 'notes', 'category', 'difficult', 'important', 'streak']
+})
+  res.render('dashboard', { title: 'Dashboard' })
+})
+
+
+
+router.get('/dashboard', function(req, res, next) {
+  res.render('dashboard', { title: 'Dashboard' })
+})
+
+module.exports = router;
