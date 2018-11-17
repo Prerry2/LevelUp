@@ -5,3 +5,6 @@ DEPENDENCIES
     express
     express-handlebars
     path
+    http?
+    passport
+    fs

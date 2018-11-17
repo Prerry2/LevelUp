@@ -1,17 +1,37 @@
-require("dotenv").config();
 var express = require('express')
 var exphbs = require('express-handlebars')
 var path = require('path')
+var http = require('http')
+var passport = require('passport')
+var fs = require('fs')
+var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser')
+var router = express.Router()
 
 var db = require('./models')
 
+// from youtube authentication video
+var routes = require('./routes')
+// var user = require('./routes/user')
+// var home = require('./routes/home')
+// var application = require('./routes/application')
+// var passportConfig = require('./config/passport')
+
 var app = express()
+// require("dotenv").config();
 var PORT = process.env.PORT || 4200
 
-// middleware
-app.use(express.urlencoded({extended: false}))
-app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
+
+// middleware
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser())
+// app.use(express.session({ secret: 'formakebettersecurity' }))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(router)
+
 
 // handlebars
 app.engine("handlebars", exphbs({
@@ -20,22 +40,8 @@ app.engine("handlebars", exphbs({
 app.set('views', path.join(__dirname, 'views'))
 app.set("view engine", "handlebars")
 
-// routes
-require("./routes/apiRoutes")(app)
-require("./routes/htmlRoutes")(app)
-
 // temp routes from previous build
-var index = require('./routes/index')
-var users = require('./routes/users')
-app.use('/', index)
-app.use('/users', users)
-
-// catch 404 from previous build
-app.use(function(req,res,next) {
-    var err = new Error('Not Found')
-    err.status = 404;
-    next(err)
-})
+app.use('/', routes.index)
 
 const syncOptions = { force: false }
 
@@ -45,10 +51,11 @@ const syncOptions = { force: false }
 // }
 
 // start server, sync models
-db.sequelize.sync(syncOptions).then(function() {
-    app.listen(PORT, function() {
-        console.log("Listening on port " + PORT)
-    })
-})
+// db.sequelize.sync(syncOptions).then(function() {
+//     app.listen(PORT, function() {
+//         console.log("Listening on port " + PORT)
+//     })
+// })
+console.log('it works')
 
 module.exports = app
