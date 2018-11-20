@@ -1,95 +1,116 @@
-var express = require('express');
-var router = express.Router();
-// var db = require('../models')
+module.exports = (app, passport) => {
 
-const connection = require('../config/connection.js')
-const User = connection.User;
-const Task = connection.Task;
-const Routine = connection.Routine;
+    var card = require("../models/card.js");
+    var user = require("../models/user.js")
 
-router.get('/', function(req, res, next) {
-  res.render('index', {title: 'LevelUP'})
-});
+    app.get('/', (req, res) => {
+        res.render('index');
+    });
 
-router.get('/register', function(req, res, next) {
-  res.render('register', { title: 'Registration' });
-});
+    app.get('/login', (req, res) => {
+        res.render('login', {
+            message: req.flash('loginMessage')
+        });
+    });
 
-router.post('/register', function(req, res, next) {
-  
-  User.create(req.body, {
-    fields: ['username', 'password', 'avatar']
-  })
-  
-  res.render('dashboard', { title: 'Registration Complete - Welcome To LevelUP' })
- 
-});
+    app.post('/login', passport.authenticate('local-login', {
+            successRedirect: '/profile',
+            failureRedirect: '/login',
+            failureFlash: true
+        }),
+        (req, res) => {
+            if (req.body.remember) {
+                req.session.cookie.maxAge = 1000 * 60 * 3;
+            } else {
+                req.session.cookie.expires = false;
+            }
+            res.redirect('/');
+        });
 
+    app.get('/signup', (req, res) => {
+        res.render('signup', {
+            message: req.flash('signupMessage')
+        });
+    });
 
+    app.post('/signup', passport.authenticate('local-signup', {
+        successRedirect: '/profile',
+        failureRedirect: '/signup',
+        failureFlash: true
+    }));
 
-router.get('/login', function(req, res, next) {
-  res.render('login', { title: 'Login' });
-});
+    app.get('/profile', isLoggedIn, function (req, res) {
+        card.all((data) => {
+            console.log(data)
+            const cards = data
+            const user = req.user
+            const checkUserMatch = () => {
+                for (var i = 0; i < cards.length; i++) {
+                    const cardUser = cards[i].username
+                    const staticUser = user
+                    console.log(`card user ${cardUser}`)
+                    console.log(`static user ${staticUser}`)
+                    if (cardUser === staticUser) {
+                        console.log(cards[i].title)
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+            }
+            res.render('profile', {
+                user: user,
+                cards: cards,
+                hasCards: cards.length > 0,
+                allUsers: [],
+                checkUserMatch: checkUserMatch()
+            })
+        })
+    });
 
-router.post('/login', function(req, res, next) {
-  res.render('dashboard', { title: 'Dashboard' })
-
-  const username = req.body.username
-  const password = req.body.password
-
-})
-
-
-
-router.get('/addtask', function(req, res, next) {
-  res.render('addtask', { title: 'Add A New Task' })
-})
-
-router.post('/addtask', function(req, res, next) {
-  
-  Task.create(req.body, {
-        fields: ['title', 'notes', 'category', 'difficult', 'important', 'deadline', 'deadlineDate']
+    app.get('/api/cards', (req, res) => {
+        card.all((data) => {
+            var hbsObject = {cards:data}
+            res.json(hbsObject)
+        })
     })
-  
-  res.render('dashboard', { title: 'Dashboard' })
-})
 
+    app.get('/api/users', (req, res) => {
+        user.all((data) => {
+            var hbsObject = {allUsers:data}
+            res.json(hbsObject)
+        })
+    })
 
+    app.post('/api/cards/create', (req, res, next) => {
+        console.log(req.body);
+        card.create([
+            'type', 'title', 'notes', 'category', 'difficult', 'important', 'deadline', 'deadlineDate', 'streak', 'username'
+        ], [
+            req.body.type, req.body.title, req.body.notes, req.body.category, req.body.difficult, req.body.important, req.body.deadline, req.body.deadlineDate, req.body.streak, req.body.username
+        ], (result) => {
+            res.render('/profile')
+            console.log(result)
+        }) 
+    })
 
-router.get('/addroutine', function(req, res, next) {
-  res.render('addroutine', { title: 'Add A New Routine' })
-})
+    app.delete('api/cards/delete/:id', (req, res) => {
+        const condition = "id = " + req.params.id;
+        card.delete(condition, function(result) {
+            console.log(result)
+        })
+        res.redirect('/profile')
+    })
 
-router.post('/addroutine', function(req, res, next) {
-  
-  Routine.create(req.body, {
-    fields: ['title', 'notes', 'category', 'difficult', 'important', 'streak']
-})
-  res.render('dashboard', { title: 'Dashboard' })
-})
+    app.get('/logout', (req, res) => {
+        req.logout();
+        res.redirect('/');
+    })
+};
 
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated())
+        return next();
 
-
-router.get('/dashboard', function(req, res, next) {
-  res.render('dashboard', { title: 'Dashboard' })
-})
-
-router.get('/api/users', function(req, res, next) {
-  User.findAll({}).then(function(dbUsers) {
-    res.json(dbUsers)
-  })
-})
-
-router.get('/api/routines', function(req, res, next) {
-  Routine.findAll({}).then(function(dbRoutine) {
-    res.json(dbRoutine)
-  })
-})
-
-router.get('/api/tasks', function(req, res, next) {
-  Task.findAll({}).then(function(dbRoutine) {
-    res.json(dbUsers)
-  })
-})
-
-module.exports = router;
+    res.redirect('/');
+}

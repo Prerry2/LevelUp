@@ -1,0 +1,195 @@
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+            <a class="navbar-brand" href="#">
+                <span><img src="sq-logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></span>
+                LevelUP : {{user.username}}
+            </a>
+            <a class='mx-5' href="/api/cards" target="_blank" >API: Cards</a>
+            <a class='mx-5' href="/api/users" target="_blank" >API: Users</a>
+            <a href="/logout"><button class="col-12 btn btn-danger btn-lg  my-1 float-right">LOGOUT</button></a>
+        </nav>
+    <div class="container my-3">
+        <div class="page-header text-center">
+            <h1>My Profile</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="well">
+                    <h3><span class="fa fa-user"></span> Welcome
+                        {{ user.username }}
+                    </h3>
+                    <p>
+                        <strong>username</strong>
+                        {{ user.username }} <br>
+                        <strong>experience</strong>
+                        {{ user.experience }} <br>
+                        <strong>intelligence</strong>
+                        {{ user.intelligence }} <br>
+                        <strong>strength</strong>
+                        {{ user.strength }} <br>
+                        <strong>charisma</strong>
+                        {{ user.charisma }} <br>
+                        <strong>vitality</strong>
+                        {{ user.vitality }} <br>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <h1>Current Cards:</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">USERNAME</th>
+                        <th scope="col">TYPE</th>
+                        <th scope="col">TITLE</th>
+                        <th scope="col">NOTES</th>
+                        <th scope="col">CATEGORY</th>
+                    </tr>
+                </thead>
+                {{#if hasCards }}
+                {{#each cards}}
+                {{#unless checkUserMatch}}
+                <tr class="{{this.username}}">
+                    <td>
+                        {{ this.username }}
+                    </td>
+                    <td>
+                        {{ this.type }}
+                    </td>
+                    <td>
+                        {{ this.title }}
+                    </td>
+                    <td>
+                        {{ this.notes }}
+                    </td>
+                    <td>
+                        {{ this.category }}
+                    </td>
+                    <td>
+                        <button><i class="fas fa-check-circle"></i></button>
+                    </td>
+                    <td>
+                        <button><i class="fas fa-edit"></i></button>
+                    </td>
+                    <td>
+                        <button class="delete-card" data-id="{{this.id}}"><i class="fas fa-times-circle"></i></button>
+                    </td>
+                </tr>
+                {{/unless}}
+                {{/each}}
+                {{else}}
+                <h3>No Cards Found! Please create one below!</h3>
+                {{/if}}
+            </table>
+        </div>
+
+        <div class="row mb-5 pb-5">
+            <div class="col mx-1 my-1">
+                <h1>Add A Card:</h1>
+
+                <hr style="width:75%">
+                <form method="POST" action="/api/cards/create">
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" name="username" id="staticUsername"
+                                value="{{{ user.username }}}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="type">Type of LevelUp</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="type" id="task" value="task">
+                            <label class="form-check-label" for="task">Task</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="type" id="routine" value="routine">
+                            <label class="form-check-label" for="routine">Routine</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="title" class="col-sm-2 col-form-label">Title</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="title" id="title" placeholder="Task Title">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="notes" class="col-sm-2 col-form-label">Notes</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Task Notes">
+                    </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="category">Category</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="category1" value="professional">
+                            <label class="form-check-label" name="category" for="category1">Professional</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="category2" value="exercise">
+                            <label class="form-check-label" name=for="category2">Exercise</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="category3" value="selfcare">
+                            <label class="form-check-label" for="category3">Self-Care</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="category4" value="education">
+                            <label class="form-check-label" for="category4">Education</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category" id="category5" value="chores">
+                            <label class="form-check-label" for="category5">Chores</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="difficult">Difficulty</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="difficult" id="noDifficult" value="0">
+                            <label class="form-check-label" for="noDifficult">Easy</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="difficult" id="yesDifficult" value="1">
+                            <label class="form-check-label" for="yesDifficult">Difficult</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="important">Importance</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="important" id="noImportant" value="0">
+                            <label class="form-check-label" for="noImportant">Trivial</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="important" id="yesImportant" value="1">
+                            <label class="form-check-label" for="yesImportant">Essential</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="deadline">Has Deadline?</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="deadline" id="yesDeadline" value="1">
+                            <label class="form-check-label" for="yesDeadline">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="deadline" id="noDeadline" value="0">
+                            <label class="form-check-label" for="noDeadline">No</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="deadlineDate" class="col-sm-2 col-form-label">Deadline Date</label>
+                        <input type="text" class="col-sm-10 form-control" name="deadlineDate" id="deadlineDate"
+                            placeholder="MM/DD/YYYY">
+                    </div>
+                    <br>
+                    <div class="form-group m-0">
+                        <button type="submit" class="col-12 btn btn-info btn-lg btn-block my-1">ADD CARD</button>
+                    </div>
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
